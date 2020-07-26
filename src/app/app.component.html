@@ -1,0 +1,29 @@
+<div class="row">
+  <table class="tab">
+    <thead>
+      <tr>
+        <th *ngFor="let tab of data;let i = index">Round {{i+1}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td *ngFor="let tab of data">
+          <table>
+            <thead>
+              <tr>
+                <th>Items</th>
+                <th *ngFor="let in of tab;let i = index">Vendor {{i+1}} Quote</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let in of counter(5) ;let i = index">
+                <td>Item {{i+1}}</td>
+                <td *ngFor="let row of tab">{{ row.item[i] }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
