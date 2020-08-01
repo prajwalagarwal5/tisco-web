@@ -1,7 +1,10 @@
-/* th , td {
+.padding {
   border: 1px solid black;
-} */
+}
 
+.table td, .table th {
+  padding: 0.15rem !important;
+}
 
 .table thead th {
   font-size: xx-small;
