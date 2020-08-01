@@ -1,24 +1,37 @@
-<div class="row">
-  <table class="tab">
+<div class="row" style="text-align: center;">
+  <table class="table table-striped">
     <thead>
       <tr>
-        <th *ngFor="let tab of data;let i = index">Round {{i+1}}</th>
+        <th>RFX No : {{data2.rfxNumber}}</th>
+        <th *ngFor="let round of data2.rounds;let i = index">Round {{i+1}}</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody>      
       <tr>
-        <td *ngFor="let tab of data">
-          <table>
+        <td>
+          <table style="width: 100%;">
             <thead>
               <tr>
                 <th>Items</th>
-                <th *ngFor="let in of tab;let i = index">Vendor {{i+1}} Quote</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let in of counter(5) ;let i = index">
+              <tr *ngFor="let in of counter(3) ;let i = index">
                 <td>Item {{i+1}}</td>
-                <td *ngFor="let row of tab">{{ row.item[i] }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td *ngFor="let round of data2.rounds">
+          <table style="width: 100%;">
+            <thead>
+              <tr>
+                <th *ngFor="let vendor of round.vendors;let i = index">Vendor {{i+1}} Quote</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let in of counter(3) ;let i = index">                
+                <td *ngFor="let vendor of round.vendors">{{ vendor.items.item[i] }}</td>
               </tr>
             </tbody>
           </table>

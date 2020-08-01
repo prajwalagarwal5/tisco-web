@@ -1,7 +1,8 @@
-th , td {
+/* th , td {
   border: 1px solid black;
-}
+} */
 
-.tab{
-    border: 1px solid black;
+
+.table thead th {
+  font-size: xx-small;
 }

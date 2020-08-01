@@ -1,27 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+export interface List{
+  item: number[];
+}
+
+export interface Vendor{
+  items: List;
+}
+
+export interface Round{
+  vendors: Vendor[];
+}
+
+export interface Data{
+  rounds: Round[];
+  rfxNumber: String;
+}
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'tisco-web';
-  data = [
-    [
-      { item: [10, 20, 50, 60] },
-      { item: [30, 40] },
-      { item: [70, 80] },
-      { item: [70, 80] }
-    ],
-    [
-      { item: [10, 20, 50, 60] },
-      { item: [30, 40] },
-      { item: [70, 80] }
-    ]
-
-  ]
-
+  
+  item:List = {item:[10,20,30]}
+  vendor: Vendor = {items:this.item}
+  listOfVendor:Vendor[] = [this.vendor,this.vendor,this.vendor];
+  r1:Round = {vendors: this.listOfVendor};
+  listOfRound: Round[] = [this.r1,this.r1,this.r1];
+  data2: Data = {
+    rounds:this.listOfRound,
+    rfxNumber:"20200812.23456"
+  }
 
 
   d1 = {
@@ -77,7 +89,13 @@ export class AppComponent {
 
   }
 
+  ngOnInit() {
+    console.log(this.data2);
+  }
+
   counter(i: number) {
     return new Array(i);
   }
+
+
 }
