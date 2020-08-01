@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 
-export interface List{
+export interface List {
   item: number[];
 }
 
-export interface Vendor{
+export interface Vendor {
   items: List;
 }
 
-export interface Round{
+export interface Round {
   vendors: Vendor[];
 }
 
-export interface Data{
+export interface Data {
   rounds: Round[];
   rfxNumber: String;
 }
@@ -24,15 +24,15 @@ export interface Data{
 })
 export class AppComponent implements OnInit {
   title = 'tisco-web';
-  
-  item:List = {item:[10,20,30]}
-  vendor: Vendor = {items:this.item}
-  listOfVendor:Vendor[] = [this.vendor,this.vendor,this.vendor];
-  r1:Round = {vendors: this.listOfVendor};
-  listOfRound: Round[] = [this.r1,this.r1,this.r1];
+
+  item: List = { item: [10, 20, 30] }
+  vendor: Vendor = { items: this.item }
+  listOfVendor: Vendor[] = [this.vendor, this.vendor, this.vendor];
+  r1: Round = { vendors: this.listOfVendor };
+  listOfRound: Round[] = [this.r1, this.r1, this.r1];
   data2: Data = {
-    rounds:this.listOfRound,
-    rfxNumber:"20200812.23456"
+    rounds: this.listOfRound,
+    rfxNumber: "20200812.23456"
   }
 
 
