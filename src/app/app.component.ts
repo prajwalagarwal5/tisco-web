@@ -25,11 +25,33 @@ export interface Data {
 export class AppComponent implements OnInit {
   title = 'tisco-web';
 
-  item: List = { item: [10, 20, 30] }
-  vendor: Vendor = { items: this.item }
-  listOfVendor: Vendor[] = [this.vendor, this.vendor, this.vendor];
-  r1: Round = { vendors: this.listOfVendor };
-  listOfRound: Round[] = [this.r1, this.r1, this.r1];
+  maxNoOfItems: number = 5;
+  item1: List = { item: [10, 20, 30, 40, 50] }
+  item3: List = { item: [100, 200, 300, 400, 500] }
+  item4: List = { item: [1010, 2020, 3030, 4040, 5050] }
+  item2: List = { item: [60, 70] }
+  r1: Round = {
+    vendors: [
+      { items: this.item1 },
+      { items: this.item3 },
+      { items: this.item4 }
+    ]
+  };
+  r3: Round = {
+    vendors: [
+      { items: this.item1 },
+      { items: this.item1 },
+      { items: this.item1 }
+    ]
+  };
+  r2: Round = {
+    vendors: [
+      { items: this.item2 },
+      { items: this.item2 },
+      { items: this.item2 }
+    ]
+  };
+  listOfRound: Round[] = [this.r1, this.r2, this.r3, this.r2, this.r1];
   data2: Data = {
     rounds: this.listOfRound,
     rfxNumber: "20200812.23456"

@@ -1,9 +1,10 @@
-<div class="row" style="text-align: center;">
-  <table class="table table-striped table-dark">
+<div class="table-responsive" style="text-align: center;">
+  <table class="table table-striped table-dark table-bordered">
     <thead>
       <tr>
         <th class="padding">RFX No : {{data2.rfxNumber}}</th>
-        <th class="padding" style="background-color: blue;" *ngFor="let round of data2.rounds;let i = index">Round {{i+1}}</th>
+        <th class="padding" style="background-color: blue;" *ngFor="let round of data2.rounds;let i = index">Round
+          {{i+1}}</th>
       </tr>
     </thead>
     <tbody>
@@ -16,13 +17,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let in of counter(3) ;let i = index">
+              <tr *ngFor="let in of counter(maxNoOfItems) ;let i = index">
                 <td class="padding">Item {{i+1}}</td>
               </tr>
             </tbody>
           </table>
         </td>
-        <td *ngFor="let round of data2.rounds">
+        <td *ngFor="let round of data2.rounds;">
           <table style="width: 100%;">
             <thead>
               <tr>
@@ -30,8 +31,15 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let in of counter(3) ;let i = index">
-                <td class="padding" *ngFor="let vendor of round.vendors">{{ vendor.items.item[i] }}</td>
+              <tr *ngFor="let in of counter(maxNoOfItems);let i = index">
+                <td class="padding" *ngFor="let vendor of round.vendors">
+                  <div *ngIf="vendor.items.item[i] != null">
+                    {{ vendor.items.item[i] }}
+                  </div>
+                  <div *ngIf="vendor.items.item[i] == null">
+                    &nbsp;
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>

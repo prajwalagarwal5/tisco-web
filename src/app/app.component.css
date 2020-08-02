@@ -2,10 +2,17 @@
   border: 1px solid black;
 }
 
-.table td, .table th {
+.table td,
+.table th {
   padding: 0.15rem !important;
 }
 
 .table thead th {
   font-size: xx-small;
+}
+
+.table {
+  width: max-content;
+  height: max-content;
+  margin-bottom: 0;
 }
