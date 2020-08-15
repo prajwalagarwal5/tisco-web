@@ -1,10 +1,10 @@
-<div class="table-responsive" style="text-align: center;">
+<div *ngIf="gotdata" class="table-responsive" style="text-align: center;">
   <table class="table table-striped table-dark table-bordered">
     <thead>
       <tr>
-        <th class="padding">RFX No : {{data2.rfxNumber}}</th>
-        <th class="padding" style="background-color: blue;" *ngFor="let round of data2.rounds;let i = index">Round
-          {{i+1}}</th>
+        <th class="padding">RFX No : {{data.rfxNumber}}</th>
+        <th class="padding" style="background-color: blue;" *ngFor="let round of data.rounds;let i = index">Round
+          {{i}}</th>
       </tr>
     </thead>
     <tbody>
@@ -14,29 +14,43 @@
             <thead>
               <tr>
                 <th class="padding">Items</th>
+                <th class="padding">PR quantity</th>
+                <th class="padding">PR Rate</th>
+                <th class="padding">UOM</th>
+                <th class="padding">LPP</th>
+                <th class="padding">LPP date</th>
+                <th class="padding">LPP vendor</th>
+                <th class="padding">LPP Order No</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let in of counter(maxNoOfItems) ;let i = index">
+              <tr *ngFor="let in of items ;let i = index">
                 <td class="padding">Item {{i+1}}</td>
+                <td class="padding">{{in.PR_QTY}}</td>
+                <td class="padding">{{in.PR_RATE}}</td>
+                <td class="padding">{{in.UNIT_OF_MEASUREMENT}}</td>
+                <td class="padding">{{in.LPP_IN_INR}}</td>
+                <td class="padding">{{in.LPP_DATE}}</td>
+                <td class="padding">{{in.LPP_VENDOR}}</td>
+                <td class="padding">{{in.LPP_DOCUMENT}}</td>
               </tr>
             </tbody>
           </table>
         </td>
-        <td *ngFor="let round of data2.rounds;">
+        <td *ngFor="let round of data.rounds;">
           <table style="width: 100%;">
             <thead>
               <tr>
-                <th class="padding" *ngFor="let vendor of round.vendors;let i = index">Vendor {{i+1}} Quote</th>
+                <th class="padding" *ngFor="let vendor of round.vendors;let i = index">{{vendor.name}}</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let in of counter(maxNoOfItems);let i = index">
+              <tr *ngFor="let in of items ;let i = index">
                 <td class="padding" *ngFor="let vendor of round.vendors">
-                  <div *ngIf="vendor.items.item[i] != null">
-                    {{ vendor.items.item[i] }}
+                  <div *ngIf="vendor.items.length != 0">
+                    <div *ngIf="vendor.items.item[i] != undefined">{{ vendor.items.item[i].ITEM_NO }}</div>
                   </div>
-                  <div *ngIf="vendor.items.item[i] == null">
+                  <div *ngIf="vendor.items.length == 0">
                     &nbsp;
                   </div>
                 </td>

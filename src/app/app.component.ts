@@ -1,11 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalService } from "./services/global.service";
 
-export interface List {
-  item: number[];
+export interface item {
+  ITEM_NO: string;
+  LPP_DATE: string;
+  LPP_DOCUMENT: string;
+  LPP_IN_INR: string;
+  LPP_VENDOR: string;
+  PR_QTY: string;
+  PR_RATE: string;
+  SERV_LINE_NO: string;
+  UNIT_OF_MEASUREMENT: string;
+  VENDOR_QUOTE: string;
 }
 
 export interface Vendor {
-  items: List;
+  items: item[];
+  name: String;
 }
 
 export interface Round {
@@ -24,100 +35,51 @@ export interface Data {
 })
 export class AppComponent implements OnInit {
   title = 'tisco-web';
+  maxNoOfRound: number = 5;
+  data: Data;
+  gotdata: boolean = false;
+  items: item[] = [];
 
-  maxNoOfItems: number = 5;
-  item1: List = { item: [10, 20, 30, 40, 50] }
-  item3: List = { item: [100, 200, 300, 400, 500] }
-  item4: List = { item: [1010, 2020, 3030, 4040, 5050] }
-  item2: List = { item: [60, 70] }
-  r1: Round = {
-    vendors: [
-      { items: this.item1 },
-      { items: this.item3 },
-      { items: this.item4 }
-    ]
-  };
-  r3: Round = {
-    vendors: [
-      { items: this.item1 },
-      { items: this.item1 },
-      { items: this.item1 }
-    ]
-  };
-  r2: Round = {
-    vendors: [
-      { items: this.item2 },
-      { items: this.item2 },
-      { items: this.item2 }
-    ]
-  };
-  listOfRound: Round[] = [this.r1, this.r2, this.r3, this.r2, this.r1];
-  data2: Data = {
-    rounds: this.listOfRound,
-    rfxNumber: "20200812.23456"
-  }
-
-
-  d1 = {
-    "rfxNumber": "20200812.23456",
-    "round1": {
-      "vendorCount": 3,
-      "itemCount": 2,
-      "vendor1Quote": {
-        "item1": 10,
-        "item2": 10
-      },
-      "vendor2Quote": {
-        "item1": 9,
-        "item2": 9
-      },
-      "vendor3Quote": {
-        "item1": 8,
-        "item2": 8
-      }
-    },
-    "round2": {
-      "vendorCount": 3,
-      "itemCount": 2,
-      "vendor1Quote": {
-        "item1": 11,
-        "item2": 11
-      },
-      "vendor2Quote": {
-        "item1": 12,
-        "item2": 12
-      },
-      "vendor3Quote": {
-        "item1": 13,
-        "item2": 14
-      }
-    },
-    "round3": {
-      "vendorCount": 3,
-      "itemCount": 2,
-      "vendor1Quote": {
-        "item1": 31,
-        "item2": 32
-      },
-      "vendor2Quote": {
-        "item1": 42,
-        "item2": 52
-      },
-      "vendor3Quote": {
-        "item1": 53,
-        "item2": 84
-      }
-    }
-
-  }
+  constructor(private globalService: GlobalService) { }
 
   ngOnInit() {
-    console.log(this.data2);
+    let d1 = "20200731104454.0269040";
+    this.globalService.getErfxRoundData(d1).subscribe((res: any) => {
+      this.gotdata = true;
+      let rounds: Round[] = [];
+      for (var t = 0; t <= this.maxNoOfRound; t++) {
+        let tempround = this.getRoundIdex(res, t);
+        let vendors: Vendor[] = [];
+        for (var e = 0; e < tempround.length; e++) {
+          let d: Vendor;
+          if (tempround[e].ITEMS != "") {
+            if (this.items.length == 0) {
+              this.items = tempround[e].ITEMS.item
+            }
+            d = { name: tempround[e].SUPPLIER, items: tempround[e].ITEMS };
+          } else {
+            let Items: item[] = [];
+            d = { name: tempround[e].SUPPLIER, items: Items };
+          }
+          vendors.push(d);
+        }
+        let round: Round = { vendors: vendors };
+        rounds.push(round);
+      }
+      this.data = { rfxNumber: d1, rounds: rounds };
+      console.log(this.data);
+      console.log(this.items);
+    })
   }
 
-  counter(i: number) {
-    return new Array(i);
+  getRoundIdex(d1, index) {
+    let data = [];
+    for (var i = 0; i < d1.length; i++) {
+      if (d1[i].ROUND == index) {
+        data.push(d1[i]);
+      }
+    }
+    return data;
   }
-
 
 }
