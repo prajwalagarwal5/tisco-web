@@ -53,9 +53,10 @@ export class AppComponent implements OnInit {
         for (var e = 0; e < tempround.length; e++) {
           let d: Vendor;
           if (tempround[e].ITEMS != "") {
-            if (this.items.length == 0) {
-              this.items = tempround[e].ITEMS.item
-            }
+            // if (this.items.length == 0) {
+            //   this.items = tempround[e].ITEMS.item
+            // }
+            this.setItems(tempround[e].ITEMS.item)
             d = { name: tempround[e].SUPPLIER, items: tempround[e].ITEMS };
           } else {
             let Items: item[] = [];
@@ -70,6 +71,29 @@ export class AppComponent implements OnInit {
       console.log(this.data);
       console.log(this.items);
     })
+  }
+
+  setItems(tempround) {
+    for (var i = 0; i < tempround.length; i++) {
+      if ((tempround[i].ITEMS != [] || tempround[i].ITEMS != "") && this.isItemNotPresent(tempround[i].ITEM_NO)) {
+        this.items.push(tempround[i]);
+      }
+    }
+  }
+
+  isItemNotPresent(ITEM_NO) {
+    let res: boolean = true;
+    if (this.items.length == 0) {
+      return true
+    }
+    for (var i = 0; i < this.items.length; i++) {
+      if (this.items[i].ITEM_NO == ITEM_NO) {
+        return false;
+      } else {
+        continue;
+      }
+    }
+    return res;
   }
 
   getRoundIdex(d1, index) {

@@ -25,7 +25,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let in of items ;let i = index">
-                <td class="padding">Item {{i+1}}</td>
+                <td class="padding">{{in.ITEM_NO}}</td>
                 <td class="padding">{{in.PR_QTY}}</td>
                 <td class="padding">{{in.PR_RATE}}</td>
                 <td class="padding">{{in.UNIT_OF_MEASUREMENT}}</td>
@@ -48,9 +48,9 @@
               <tr *ngFor="let in of items ;let i = index">
                 <td class="padding" *ngFor="let vendor of round.vendors">
                   <div *ngIf="vendor.items.length != 0">
-                    <div *ngIf="vendor.items.item[i] != undefined">{{ vendor.items.item[i].ITEM_NO }}</div>
+                    <div *ngIf="vendor.items.item[i] != undefined">{{ vendor.items.item[i].VENDOR_QUOTE }}</div>
                   </div>
-                  <div *ngIf="vendor.items.length == 0">
+                  <div *ngIf="vendor.items.length == 0 || vendor.items.item[i] == undefined">
                     &nbsp;
                   </div>
                 </td>
