@@ -12,6 +12,7 @@ export interface item {
   SERV_LINE_NO: string;
   UNIT_OF_MEASUREMENT: string;
   VENDOR_QUOTE: string;
+  COLOR: string;
 }
 
 export interface Vendor {
@@ -43,10 +44,11 @@ export class AppComponent implements OnInit {
   constructor(private globalService: GlobalService) { }
 
   ngOnInit() {
-    let d1 = "20200731104454.0269040";
+    let d1 = "2008160001";
     this.globalService.getErfxRoundData(d1).subscribe((res: any) => {
       this.gotdata = true;
       let rounds: Round[] = [];
+      this.maxNoOfRound = this.getMaxRound(res);
       for (var t = 0; t <= this.maxNoOfRound; t++) {
         let tempround = this.getRoundIdex(res, t);
         let vendors: Vendor[] = [];
@@ -57,12 +59,32 @@ export class AppComponent implements OnInit {
             //   this.items = tempround[e].ITEMS.item
             // }
             this.setItems(tempround[e].ITEMS.item)
-            d = { name: tempround[e].SUPPLIER, items: tempround[e].ITEMS };
+            d = { name: tempround[e].SUPPLIER, items: tempround[e].ITEMS.item };
           } else {
             let Items: item[] = [];
             d = { name: tempround[e].SUPPLIER, items: Items };
           }
           vendors.push(d);
+
+        }
+        for (let index = 0; index < vendors.length; index++) {
+          for (let index1 = 1; index1 < vendors.length; index1++) {
+            let v1 = vendors[index];
+            let v2 = vendors[index1];
+            let maxItemCount = v1.items.length < v2.items.length ? v2.items.length : v1.items.length;
+            for (let index3 = 0; index3 < maxItemCount; index3++) {
+              if (v1.items[index3].VENDOR_QUOTE > v2.items[index3].VENDOR_QUOTE) {
+                v2.items[index3].COLOR = "#47ec6b"
+                v1.items[index3].COLOR = "#efefef"
+              } else if (v1.items[index3].VENDOR_QUOTE < v2.items[index3].VENDOR_QUOTE) {
+                v2.items[index3].COLOR = "#efefef"
+                v1.items[index3].COLOR = "#47ec6b"
+              }
+
+            }
+
+          }
+
         }
         let round: Round = { vendors: vendors };
         rounds.push(round);
@@ -71,6 +93,16 @@ export class AppComponent implements OnInit {
       console.log(this.data);
       console.log(this.items);
     })
+  }
+
+  getMaxRound(res) {
+    let max = 0;
+    for (let index = 0; index < res.length; index++) {
+      if (max < res[index].ROUND) {
+        max = res[index].ROUND
+      }
+    }
+    return max;
   }
 
   setItems(tempround) {

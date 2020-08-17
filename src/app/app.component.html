@@ -48,9 +48,9 @@
               <tr *ngFor="let in of items ;let i = index">
                 <td class="padding" *ngFor="let vendor of round.vendors">
                   <div *ngIf="vendor.items.length != 0">
-                    <div *ngIf="vendor.items.item[i] != undefined">{{ vendor.items.item[i].VENDOR_QUOTE }}</div>
+                    <div [style.background-color]="vendor.items[i].COLOR" *ngIf="vendor.items[i] != undefined && in.ITEM_NO==vendor.items[i].ITEM_NO">{{ vendor.items[i].VENDOR_QUOTE }}</div>
                   </div>
-                  <div *ngIf="vendor.items.length == 0 || vendor.items.item[i] == undefined">
+                  <div *ngIf="vendor.items.length == 0 || vendor.items[i] == undefined">
                     &nbsp;
                   </div>
                 </td>
